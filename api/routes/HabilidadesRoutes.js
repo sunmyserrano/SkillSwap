@@ -9,14 +9,16 @@ route.post('/', async (req, resp) => {
         nombre,
         Descripcion,
         Categoria,
-        Nivel } = req.body;
+        Nivel,
+        Usuario_Id } = req.body;
 
     const nuevoHabilidades = new Habilidades(
         { 
           nombre,
           Descripcion,
           Categoria,
-          Nivel  
+          Nivel,
+          Usuario_Id  
         }
     );
     try {

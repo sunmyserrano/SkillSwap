@@ -6,12 +6,14 @@ const Historial_conexion = require('../models/Historial_conexion');
 //Crear Historial_conexion nuevo
 route.post('/', async (req, resp) => {
     const { 
+        Usuario_Id,
         fecha_inicio,
         fecha_fin,
         Dispositivo } = req.body;
 
     const nuevoHistorial_conexion = new Historial_conexion(
         { 
+            Usuario_Id,
             fecha_inicio,
             fecha_fin,
             Dispositivo

@@ -19,6 +19,10 @@ const HabilidadesSchema = new mongoose.Schema(
         Nivel: {
             type: String,
             required: true
+        },
+        Usuario_Id: {
+            type: Number,
+            required: true
         }
     }
 );

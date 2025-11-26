@@ -3,7 +3,10 @@ const mongoose = require('mongoose');
 const Historial_conexionSchema = new mongoose.Schema(
 
 
-    {
+    {   Usuario_Id: {
+            type: Number,
+            required: true
+        },
         fechaHora_inicio: {
             type: Date,
             required: true,

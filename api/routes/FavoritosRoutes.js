@@ -6,17 +6,13 @@ const Favoritos = require('../models/Favoritos');
 //Crear Favoritos nuevo
 route.post('/', async (req, resp) => {
     const { 
-        nombre,
-        Descripcion,
-        Categoria,
-        Nivel } = req.body;
+        Usuario_Id,
+        Favoritos } = req.body;
 
     const nuevoFavoritos = new Favoritos(
         { 
-          nombre,
-          Descripcion,
-          Categoria,
-          Nivel  
+          Usuario_Id,
+          Favoritos,
         }
     );
     try {

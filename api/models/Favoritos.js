@@ -4,19 +4,11 @@ const FavoritosSchema = new mongoose.Schema(
 
 
     {
-        nombre: {
-            type: String,
-            required: true
-        },
-        Descripcion: {
-            type: String,
+        Usuario_Id: {
+            type: Number,
             required: true
         },
         Favoritos: {
-            type: String,
-            required: true
-        },
-        Nivel: {
             type: String,
             required: true
         }
