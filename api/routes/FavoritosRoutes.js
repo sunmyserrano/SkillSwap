@@ -24,6 +24,53 @@ route.post('/', async (req, resp) => {
 }
 );
 
+//Update put
+route.put('/:id', async (req, resp) => {
+
+     try {
+
+          const FavoritoActualizado = await Favoritos.findByIdAndUpdate(
+               req.params.id,
+               req.body,
+               { new: true }
+
+          );
+
+          if (!FavoritoActualizado) {
+               return resp.status(404).json({ mesaje: "Favorito no encontrado" });
+          }
+
+          resp.status(200).json(FavoritoActualizado);
+     } catch (error) {
+          resp.status(400).json({ mesaje: error.message });
+     }
+
+}
+);
+
+
+//Delete 
+route.delete('/:id', async (req, resp) => {
+
+     try {
+
+          const FavoritoEliminado = await Favoritos.findByIdAndDelete(
+               req.params.id,
+          );
+
+          if (!FavoritoEliminado) {
+               return resp.status(404).json({ mesaje: "Favorito no encontrado" });
+          }
+
+          resp.status(200).json({ mesaje: 'Favorito Eliminado' });
+     } catch (error) {
+          resp.status(400).json({ mesaje: error.message });
+     }
+
+}
+);
+
+
 //Obtener datos
 route.get('/', async(req, resp) =>{
                try {

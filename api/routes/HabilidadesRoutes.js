@@ -30,6 +30,53 @@ route.post('/', async (req, resp) => {
 }
 );
 
+//Update put
+route.put('/:id', async (req, resp) => {
+
+     try {
+
+          const HabilidadActualizada = await Habilidades.findByIdAndUpdate(
+               req.params.id,
+               req.body,
+               { new: true }
+
+          );
+
+          if (!HabilidadActualizada) {
+               return resp.status(404).json({ mesaje: "Habilidad no encontrada" });
+          }
+
+          resp.status(200).json(HabilidadActualizada);
+     } catch (error) {
+          resp.status(400).json({ mesaje: error.message });
+     }
+
+}
+);
+
+
+//Delete 
+route.delete('/:id', async (req, resp) => {
+
+     try {
+
+          const HabilidadEliminada = await Habilidades.findByIdAndDelete(
+               req.params.id,
+          );
+
+          if (!HabilidadEliminada) {
+               return resp.status(404).json({ mesaje: "Habilidad no encontrada" });
+          }
+
+          resp.status(200).json({ mesaje: 'Habilidad Eliminada' });
+     } catch (error) {
+          resp.status(400).json({ mesaje: error.message });
+     }
+
+}
+);
+
+
 //Obtener datos
 route.get('/', async(req, resp) =>{
                try {

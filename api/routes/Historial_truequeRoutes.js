@@ -34,6 +34,40 @@ route.post('/', async (req, resp) => {
 }
 );
 
+//Update put
+route.put('/:id', async (req, resp) => {
+        try {
+            const Historial_truequeActualizado = await Historial_trueque.findByIdAndUpdate(
+                req.params.id,
+                req.body,
+                { new: true }
+            );
+            if (!Historial_truequeActualizado) {
+                return resp.status(404).json({ mesaje: "Historial de trueque no encontrado" });
+            }
+            resp.status(200).json(Historial_truequeActualizado);
+        } catch (error) {
+            resp.status(400).json({ mesaje: error.message });
+        }   
+}
+);
+
+//Delete 
+route.delete('/:id', async (req, resp) => {
+     try {
+            const Historial_truequeEliminado = await Historial_trueque.findByIdAndDelete(
+                req.params.id,
+              );
+            if (!Historial_truequeEliminado) {
+                return resp.status(404).json({ mesaje: "Historial de trueque no encontrado" });
+            }
+            resp.status(200).json({ mesaje: 'Historial de trueque Eliminado' });
+        } catch (error) {
+            resp.status(400).json({ mesaje: error.message });
+        }
+}
+);
+
 //Obtener datos
 route.get('/', async(req, resp) =>{
                try {
