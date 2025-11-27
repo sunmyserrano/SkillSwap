@@ -53,7 +53,7 @@ app.use('/api/multimedia', MultimediaRoutes);
 app.use(express.static('Front'));
 
 
-//Inciar el servidor, o como veremos el server.
+//Inciar el servidor.
 app.listen(PORT, () => {
     console.log(`Servidor encendido https://localhost:${PORT}`);
 });
