@@ -4,9 +4,8 @@ const route = express.Router();
 const Usuario = require('../models/Usuarios')
 
 
-// ======================================================
 // Crear Usuario nuevo
-// ======================================================
+
 route.post('/', async (req, resp) => {
     const { rol_id,
         nombre,
@@ -39,9 +38,9 @@ route.post('/', async (req, resp) => {
 });
 
 
-// ======================================================
+
 // Obtener todos
-// ======================================================
+
 route.get('/', async (req, resp) => {
     try {
         const usuariosDatos = await Usuario.find();
@@ -52,9 +51,9 @@ route.get('/', async (req, resp) => {
 });
 
 
-// ======================================================
+
 // Obtener uno por ID
-// ======================================================
+
 route.get('/:id', async (req, resp) => {
     try {
         const usuario = await Usuario.findById(req.params.id);
@@ -66,9 +65,9 @@ route.get('/:id', async (req, resp) => {
 });
 
 
-// ======================================================
+
 // Actualizar usuario
-// ======================================================
+
 route.put('/:id', async (req, resp) => {
     try {
         const usuarioActualizado = await Usuario.findByIdAndUpdate(
@@ -88,9 +87,9 @@ route.put('/:id', async (req, resp) => {
 });
 
 
-// ======================================================
+
 // Eliminar usuario
-// ======================================================
+
 route.delete('/:id', async (req, resp) => {
     try {
         const usuarioEliminado = await Usuario.findByIdAndDelete(req.params.id);

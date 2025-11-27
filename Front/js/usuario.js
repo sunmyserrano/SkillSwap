@@ -1,8 +1,8 @@
-const APIURL = "http://localhost:4000/api/usuarios";
+const APIURL = "http://localhost:3000/api/usuarios";
 
-// ======================================================
+
 // CARGAR DATOS
-// ======================================================
+
 function cargarDatos() {
 
     $.ajax({
@@ -37,9 +37,9 @@ function cargarDatos() {
 }
 
 
-// ======================================================
+
 // ELIMINAR USUARIO
-// ======================================================
+
 function eliminarUsuario(id) {
     if (!confirm("¿Seguro de eliminar?")) return;
 
@@ -54,9 +54,8 @@ function eliminarUsuario(id) {
 }
 
 
-// ======================================================
-// EDITAR USUARIO (Cargar datos en modal)
-// ======================================================
+// EDITAR USUARIO
+
 function editarUsuario(id) {
 
     $.ajax({
@@ -83,9 +82,8 @@ function editarUsuario(id) {
 }
 
 
-// ======================================================
-// GUARDAR O ACTUALIZAR (POST / PUT)
-// ======================================================
+
+// GUARDAR
 $("#usuarioFormulario").on("submit", function (e) {
     e.preventDefault();
 
@@ -103,7 +101,6 @@ $("#usuarioFormulario").on("submit", function (e) {
         direccion: $("#direccion").val()
     };
 
-    // SI EDITA → PUT
     if (id) {
 
         $.ajax({
@@ -123,7 +120,7 @@ $("#usuarioFormulario").on("submit", function (e) {
         return;
     }
 
-    // SI ES NUEVO → POST
+  
     $.ajax({
         type: "POST",
         url: APIURL,
