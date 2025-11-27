@@ -70,6 +70,40 @@ route.delete('/:id', async (req, resp) => {
 }
 );
 
+//  Update (PUT)
+route.put('/:id', async (req, resp) => {
+    try {
+        const usuarioActualizado = await Usuario.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            { new: true }
+        );
+
+        if (!usuarioActualizado) {
+            return resp.status(404).json({ mesaje: "Usuario no encontrado" });
+        }
+
+        resp.status(200).json(usuarioActualizado);
+    } catch (error) {
+        resp.status(400).json({ mesaje: error.message });
+    }
+});
+
+//  Delete
+
+route.delete('/:id', async (req, resp) => {
+    try {
+        const usuarioEliminado = await Usuario.findByIdAndDelete(req.params.id);
+
+        if (!usuarioEliminado) {
+            return resp.status(404).json({ mesaje: "Usuario no encontrado" });
+        }
+
+        resp.status(200).json({ mesaje: 'Usuario Eliminado' });
+    } catch (error) {
+        resp.status(400).json({ mesaje: error.message });
+    }
+});
 
 //Obtener datos
 route.get('/', async(req, resp) =>{

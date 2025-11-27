@@ -5,18 +5,19 @@ const Usuario = require('../models/Usuarios')
 
 //Crear Usuario nuevo
 route.post('/', async (req, resp) => {
-    const { nombre,
+    const { rol_id,
+        nombre,
         apellido,
         correo_electronico,
         contrasena,
         telefono,
         fecha_registro,
         estado,
-        rol_id,
         direccion } = req.body;
 
     const nuevoUsuario = new Usuario(
         {
+            rol_id,
             nombre,
             apellido,
             correo_electronico,
@@ -24,7 +25,6 @@ route.post('/', async (req, resp) => {
             telefono,
             fecha_registro,
             estado,
-            rol_id,
             direccion
         }
     );

@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const app = express();
-const PORT = 6000;
+const PORT = 4000;
 
 //const Rutas
 
@@ -15,13 +15,14 @@ const FavoritosRoutes = require ('./routes/FavoritosRoutes');
 const HabilidadesRoutes = require ('./routes/HabilidadesRoutes');
 const Historial_conexionesRoutes = require ('./routes/Historial_conexionesRoutes');
 const Historial_truequeRoutes = require ('./routes/Historial_truequeRoutes');
-const Sesiones_AgendadasRoutes = require('./routes/Sesiones_AgendadasRoutes')
-const RolesRoutes = require ('./routes/RolesRoutes')
-const ReportesRoutes = require('./routes/ReportesRoutes')
-const NotificacionesRoutes = require('./routes/NotificacionesRoutes')
-const EstadisticasRoutes = require('./api/routes/EstadisticasRoutes');
-const ConfiguracionRoutes = require('./api/routes/ConfiguracionRoutes');
-const MultimediaRoutes = require('./api/routes/MultimediaRoutes');
+const Sesiones_AgendadasRoutes = require('./routes/Sesiones_AgendadasRoutes');
+const RolesRoutes = require ('./routes/RolesRoutes');
+const ReportesRoutes = require('./routes/ReportesRoutes');
+const NotificacionesRoutes = require('./routes/NotificacionesRoutes');
+const EstadisticasRoutes = require('./routes/EstadisticasRoutes');
+const ConfiguracionRoutes = require('./routes/ConfiguracionRoutes');
+const MultimediaRoutes = require('./routes/MultimediaRoutes');
+
 
 
 //Middlewares 
@@ -49,6 +50,7 @@ app.use('/api/Notificaciones', NotificacionesRoutes);
 app.use('/api/estadisticas', EstadisticasRoutes);
 app.use('/api/configuracion', ConfiguracionRoutes);
 app.use('/api/multimedia', MultimediaRoutes);
+app.use(express.static('Front'));
 
 
 //Inciar el servidor, o como veremos el server.

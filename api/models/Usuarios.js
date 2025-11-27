@@ -4,6 +4,9 @@ const UsuarioSchema = new mongoose.Schema(
 
 
     {
+        rol_id: {
+            type: Number,
+        },
         nombre: {
             type: String,
             required: true
@@ -35,10 +38,7 @@ const UsuarioSchema = new mongoose.Schema(
             required: true,
             default: 'Activo'
         },
-        rol_id: {
-            type: Number,
-            required: true
-        },
+
         direccion: {
             type: String,
             required: true

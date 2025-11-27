@@ -1,7 +1,7 @@
 const express = require('express');
 const route = express.Router();
 
-const Historial_conexion = require('../models/Historial_conexion');
+const Historial_conexion = require('../models/Historial_conexiones');
 
 //Crear Historial_conexion nuevo
 route.post('/', async (req, resp) => {
