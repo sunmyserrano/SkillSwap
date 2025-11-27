@@ -15,7 +15,10 @@ const FavoritosRoutes = require ('./routes/FavoritosRoutes');
 const HabilidadesRoutes = require ('./routes/HabilidadesRoutes');
 const Historial_conexionesRoutes = require ('./routes/Historial_conexionesRoutes');
 const Historial_truequeRoutes = require ('./routes/Historial_truequeRoutes');
-
+const Sesiones_AgendadasRoutes = require('./routes/Sesiones_AgendadasRoutes')
+const RolesRoutes = require ('./routes/RolesRoutes')
+const ReportesRoutes = require('./routes/ReportesRoutes')
+const NotificacionesRoutes = require('./routes/NotificacionesRoutes')
 
 //Middlewares 
 app.use(cors());
@@ -33,6 +36,11 @@ app.use('/api/favoritos', FavoritosRoutes);
 app.use('/api/habilidades', HabilidadesRoutes);
 app.use('/api/historial_conexiones', Historial_conexionesRoutes);
 app.use('/api/historial_trueque', Historial_truequeRoutes);
+
+app.use('/api/Sesiones_Agendadas', Sesiones_AgendadasRoutes);
+app.use('/api/Roles', RolesRoutes);
+app.use('/api/Reportes', ReportesRoutes);
+app.use('/api/Notificaciones', NotificacionesRoutes);
 
 //Inciar el servidor, o como veremos el server.
 app.listen(PORT, () => {
