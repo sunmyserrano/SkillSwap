@@ -1,69 +1,143 @@
 const APIURL = "http://localhost:4000/api/usuarios";
 
-// Cargar la lista en la tabla 
-async function cargarDatos() {
+// ======================================================
+// CARGAR DATOS
+// ======================================================
+function cargarDatos() {
 
-    const res = await fetch(APIURL);
-    const usuarios = await res.json();
+    $.ajax({
+        type: "GET",
+        url: APIURL,
+        success: function (responseUsuarios) {
+            const tbody = $("#tablaDatos");
+            tbody.empty();
 
-    const tbody = document.getElementById("tablaDatos");
-    tbody.innerHTML = '';
+            responseUsuarios.forEach(usuario => {
+                tbody.append(`
+                    <tr>
+                        <td>${usuario.rol_id}</td>
+                        <td>${usuario.nombre}</td>
+                        <td>${usuario.apellido}</td>
+                        <td>${usuario.correo_electronico}</td>
+                        <td>${usuario.contrasena}</td>
+                        <td>${usuario.telefono}</td>
+                        <td>${new Date(usuario.fecha_registro).toLocaleDateString()}</td>
+                        <td>${usuario.estado}</td>
+                        <td>${usuario.direccion}</td>
 
-    usuarios.forEach(elementUsuarios => {
-        tbody.innerHTML += `
-        <tr>
-            <td>${elementUsuarios.rol_id}</td>
-            <td>${elementUsuarios.nombre}</td>
-            <td>${elementUsuarios.apellido}</td>
-            <td>${elementUsuarios.correo_electronico}</td>
-            <td>${elementUsuarios.contrasena}</td>
-            <td>${elementUsuarios.telefono}</td>
-            <td>${new Date(elementUsuarios.fecha_registro).toLocaleDateString()}</td>
-            <td>${elementUsuarios.estado}</td>
-            <td>${elementUsuarios.direccion}</td>
-        </tr>
-        `;
+                        <td>
+                            <button class="btn btn-primary btn-sm" onclick="editarUsuario('${usuario._id}')">Editar</button>
+                            <button class="btn btn-danger btn-sm" onclick="eliminarUsuario('${usuario._id}')">Eliminar</button>
+                        </td>
+                    </tr>
+                `);
+            });
+        }
     });
-
-    console.log(usuarios);
 }
 
 
+// ======================================================
+// ELIMINAR USUARIO
+// ======================================================
+function eliminarUsuario(id) {
+    if (!confirm("¿Seguro de eliminar?")) return;
 
-// Sección de guardar 
-document.getElementById("usuarioFormulario").addEventListener('submit', async e => {
+    $.ajax({
+        type: "DELETE",
+        url: `${APIURL}/${id}`,
+        success: function () {
+            alert("Usuario eliminado");
+            cargarDatos();
+        }
+    });
+}
 
+
+// ======================================================
+// EDITAR USUARIO (Cargar datos en modal)
+// ======================================================
+function editarUsuario(id) {
+
+    $.ajax({
+        type: "GET",
+        url: `${APIURL}/${id}`,
+        success: function (usuario) {
+
+            $("#idUsuario").val(id);  // <-- marcar modo edición
+            $("#rol_id").val(usuario.rol_id);
+            $("#nombre").val(usuario.nombre);
+            $("#apellido").val(usuario.apellido);
+            $("#correo_electronico").val(usuario.correo_electronico);
+            $("#contrasena").val(usuario.contrasena);
+            $("#telefono").val(usuario.telefono);
+            $("#fecha_registro").val(usuario.fecha_registro.split("T")[0]);
+            $("#estado").val(usuario.estado);
+            $("#direccion").val(usuario.direccion);
+
+            $(".modal-title").text("Editar Usuario");
+
+            $("#modalId").modal("show");
+        }
+    });
+}
+
+
+// ======================================================
+// GUARDAR O ACTUALIZAR (POST / PUT)
+// ======================================================
+$("#usuarioFormulario").on("submit", function (e) {
     e.preventDefault();
 
-    try {
+    let id = $("#idUsuario").val();
 
-        const datos = {
-            rol_id: document.getElementById("rol_id").value,
-            nombre: document.getElementById("nombre").value,
-            apellido: document.getElementById("apellido").value,
-            correo_electronico: document.getElementById("correo_electronico").value,
-            contrasena: document.getElementById("contrasena").value,
-            telefono: document.getElementById("telefono").value,
-            fecha_registro: document.getElementById("fecha_registro").value,
-            estado: document.getElementById("estado").value,
-            direccion: document.getElementById("direccion").value
-        };
+    const datos = {
+        rol_id: $("#rol_id").val(),
+        nombre: $("#nombre").val(),
+        apellido: $("#apellido").val(),
+        correo_electronico: $("#correo_electronico").val(),
+        contrasena: $("#contrasena").val(),
+        telefono: $("#telefono").val(),
+        fecha_registro: $("#fecha_registro").val(),
+        estado: $("#estado").val(),
+        direccion: $("#direccion").val()
+    };
 
-        await fetch(APIURL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(datos)
+    // SI EDITA → PUT
+    if (id) {
+
+        $.ajax({
+            type: "PUT",
+            url: `${APIURL}/${id}`,
+            data: JSON.stringify(datos),
+            contentType: "application/json",
+            success: function () {
+                alert("Usuario actualizado");
+                $("#usuarioFormulario")[0].reset();
+                $("#idUsuario").val("");
+                $("#modalId").modal("hide");
+                cargarDatos();
+            }
         });
 
-        e.target.reset();
-        cargarDatos();
-
-    } catch (error) {
-        console.log("error: " + error);
+        return;
     }
+
+    // SI ES NUEVO → POST
+    $.ajax({
+        type: "POST",
+        url: APIURL,
+        data: JSON.stringify(datos),
+        contentType: "application/json",
+        success: function () {
+            alert("Usuario guardado");
+            $("#usuarioFormulario")[0].reset();
+            $("#modalId").modal("hide");
+            cargarDatos();
+        }
+    });
 
 });
 
-
-// Ejecutar carga inicial
+// ======================================================
 cargarDatos();
