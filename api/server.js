@@ -13,6 +13,7 @@ const PORT = 3000;
 const usuarioRoutes = require ('./routes/UsuarioRoutes');
 const FavoritosRoutes = require ('./routes/FavoritosRoutes');
 const HabilidadesRoutes = require ('./routes/HabilidadesRoutes');
+const ValoracionesRoutes = require ('./routes/ValoracionesRoutes');
 const Historial_conexionesRoutes = require ('./routes/Historial_conexionesRoutes');
 const Historial_truequeRoutes = require ('./routes/Historial_truequeRoutes');
 const Sesiones_AgendadasRoutes = require('./routes/Sesiones_AgendadasRoutes');
@@ -39,6 +40,7 @@ mongoose.connect('mongodb://localhost:27017/SkillSwap_DB')
 app.use('/api/usuarios', usuarioRoutes);
 app.use('/api/favoritos', FavoritosRoutes);
 app.use('/api/habilidades', HabilidadesRoutes);
+app.use('/api/valoraciones', ValoracionesRoutes);
 app.use('/api/historial_conexiones', Historial_conexionesRoutes);
 app.use('/api/historial_trueque', Historial_truequeRoutes);
 
