@@ -6,7 +6,7 @@ const Historial_trueque = require('../models/Historial_trueque');
 //Crear Historial_trueque nuevo
 route.post('/', async (req, resp) => {
     const { 
-        Usuario_Id,
+        Historial_Id,
         Habilidad1,
         Habilidad2,
         fecha_inicio,
@@ -16,7 +16,7 @@ route.post('/', async (req, resp) => {
 
     const nuevoHistorial_trueque = new Historial_trueque(
         { 
-            Usuario_Id,
+            Historial_Id,
             Habilidad1,
             Habilidad2,
             fecha_inicio,

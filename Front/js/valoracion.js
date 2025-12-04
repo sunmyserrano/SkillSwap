@@ -85,7 +85,7 @@ function editarValoracion(id) {
             $("#intercambioID").val(v.Intercambio_Id);
             $("#puntuacion").val(v.Puntuacion);
             $("#comentario").val(v.Comentario);
-            $("#fecha").val(v.Fecha.split("T")[0]); // solo yyyy-mm-dd
+            $("#fecha").val(v.Fecha.split("T")[0]); 
 
             // Marcar estrellas
             document.querySelectorAll(".star-rating span").forEach(s => s.classList.remove("selected"));

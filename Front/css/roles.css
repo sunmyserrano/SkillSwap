@@ -1,0 +1,57 @@
+:root {
+    --main-color: #1ABC9C;
+}
+
+.custom-header {
+    background-color: var(--main-color);
+}
+
+.btn-main {
+    background-color: var(--main-color);
+    border-color: var(--main-color);
+    color: white;
+}
+
+.btn-outline-main {
+    border: 1px solid var(--main-color);
+    color: var(--main-color);
+    background-color: transparent;
+}
+
+.btn-outline-main:hover {
+    background-color: var(--main-color);
+    color: white;
+}
+
+.dropdown-menu {
+    border: 1px solid var(--main-color);
+    left: 0;
+    right: auto;
+}
+
+
+
+.bg-main {
+    background-color: var(--main-color);
+}
+
+.navbar-brand span {
+    color: white;
+}
+.btn-outline-main {
+    color: white;
+    border-color: white;
+}
+
+.btn-outline-main:hover {
+    background-color: white;
+    color: #1ABC9C;
+}
+.card {
+    border-radius: 12px;
+    border: 1px solid #e5e5e5;
+}
+
+.card.shadow {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}

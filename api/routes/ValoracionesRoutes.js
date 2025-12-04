@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
 });
 
 // Obtener por ID
-router.get('/', async (req, res) => {
+router.get('/:id', async (req, res) => {
     try {
         const valoracion = await Valoraciones.findById(req.params.id);
         if (!valoracion) return res.status(404).json({ mensaje: "Valoración no encontrada" });
@@ -34,8 +34,8 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Actualizar
-router.put('/', async (req, res) => {
+// Actualizar por ID
+router.put('/:id', async (req, res) => {
     try {
         const actualizado = await Valoraciones.findByIdAndUpdate(req.params.id, req.body, { new: true });
         if (!actualizado) return res.status(404).json({ mensaje: "Valoración no encontrada" });
@@ -45,8 +45,8 @@ router.put('/', async (req, res) => {
     }
 });
 
-// Eliminar
-router.delete('/:', async (req, res) => {
+// Eliminar por ID
+router.delete('/:id', async (req, res) => {
     try {
         const eliminado = await Valoraciones.findByIdAndDelete(req.params.id);
         if (!eliminado) return res.status(404).json({ mensaje: "Valoración no encontrada" });

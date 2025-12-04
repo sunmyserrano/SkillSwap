@@ -4,7 +4,7 @@ const Historial_TruequeSchema = new mongoose.Schema(
 
 
     {
-        Usuario_Id: {
+        Historial_Id: {
             type: Number,
             required: true
         },

@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const RolesSchema = new mongoose.Schema(
     {
+        
         Nombre: {
             type: String,
             required: true
