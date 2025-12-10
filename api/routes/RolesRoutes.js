@@ -1,65 +1,73 @@
 const express = require('express');
 const route = express.Router();
-
 const Roles = require('../models/Roles');
 
 // Crear rol
-route.post('/', async (req, resp) => {
-    const { Nombre, Descripcion, Permisos } = req.body;
-
-    const nuevoRol = new Roles({ Nombre, Descripcion, Permisos });
-
+route.post('/', async (req, res) => {
     try {
+        const { Nombre, Descripcion, Permisos } = req.body;
+        if (!Nombre || !Descripcion || !Permisos) {
+            return res.status(400).json({ mensaje: "Faltan datos requeridos" });
+        }
+        const nuevoRol = new Roles({ Nombre, Descripcion, Permisos });
         const guardado = await nuevoRol.save();
-        resp.status(201).json(guardado);
+        res.status(201).json(guardado);
     } catch (error) {
-        resp.status(400).json({ mensaje: error.message });
+        res.status(400).json({ mensaje: error.message });
     }
 });
 
-// Obtener todos
-route.get('/', async (req, resp) => {
+// Obtener todos los roles
+route.get('/', async (req, res) => {
     try {
-        const datos = await Roles.find();
-        resp.json(datos);
+        const roles = await Roles.find();
+        res.json(roles);
     } catch (error) {
-        resp.status(500).json({ mensaje: error.message });
+        res.status(500).json({ mensaje: error.message });
     }
 });
 
-// Actualizar
-route.put('/:id', async (req, resp) => {
+// Obtener un rol por ID
+route.get('/:id', async (req, res) => {
     try {
+        const rol = await Roles.findById(req.params.id);
+        if (!rol) return res.status(404).json({ mensaje: "Rol no encontrado" });
+        res.json(rol);
+    } catch (error) {
+        res.status(500).json({ mensaje: error.message });
+    }
+});
+
+// Actualizar rol
+route.put('/:id', async (req, res) => {
+    try {
+        const { Nombre, Descripcion, Permisos } = req.body;
+        if (!Nombre || !Descripcion || !Permisos) {
+            return res.status(400).json({ mensaje: "Faltan datos requeridos" });
+        }
+
         const actualizado = await Roles.findByIdAndUpdate(
             req.params.id,
-            req.body,
+            { Nombre, Descripcion, Permisos },
             { new: true }
         );
 
-        if (!actualizado) {
-            return resp.status(404).json({ mensaje: "Rol no encontrado" });
-        }
+        if (!actualizado) return res.status(404).json({ mensaje: "Rol no encontrado" });
 
-        resp.status(200).json(actualizado);
-
+        res.json(actualizado);
     } catch (error) {
-        resp.status(400).json({ mensaje: error.message });
+        res.status(400).json({ mensaje: error.message });
     }
 });
 
-// Eliminar
-route.delete('/:id', async (req, resp) => {
+// Eliminar rol
+route.delete('/:id', async (req, res) => {
     try {
         const eliminado = await Roles.findByIdAndDelete(req.params.id);
-
-        if (!eliminado) {
-            return resp.status(404).json({ mensaje: "Rol no encontrado" });
-        }
-
-        resp.status(200).json({ mensaje: 'Rol eliminado' });
-
+        if (!eliminado) return res.status(404).json({ mensaje: "Rol no encontrado" });
+        res.json({ mensaje: "Rol eliminado" });
     } catch (error) {
-        resp.status(400).json({ mensaje: error.message });
+        res.status(400).json({ mensaje: error.message });
     }
 });
 

@@ -56,4 +56,8 @@ route.get('/', async (req, resp) => {
     }
 });
 
+route.get('/test', (req, res) => {
+    res.send("Router Socios Aliados funcionando");
+});
+
 module.exports = route;

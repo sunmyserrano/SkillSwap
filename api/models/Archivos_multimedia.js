@@ -5,7 +5,7 @@ const ArchivosMultimediaSchema = new mongoose.Schema({
     Usuario_Id: Number,
     Tipo: String,
     URL: String,
-    Fecha_subido: String,
+    Fecha_subido: Date,
     Descripción: String,
     Intercambio_Id: Number
 });

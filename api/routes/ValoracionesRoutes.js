@@ -1,59 +1,59 @@
 const express = require('express');
-const route = express.Router();
+const router = express.Router();
 const Valoraciones = require('../models/Valoraciones');
 
 // Crear Valoración
-route.post('/', async (req, resp) => {
-    const nuevaValoracion = new Valoraciones(req.body);
-
+router.post('/', async (req, res) => {
     try {
+        const nuevaValoracion = new Valoraciones(req.body);
         const guardada = await nuevaValoracion.save();
-        resp.status(201).json(guardada);
+        res.status(201).json(guardada);
     } catch (error) {
-        resp.status(400).json({ mensaje: error.message });
+        res.status(400).json({ mensaje: error.message });
     }
 });
 
-// Update
-route.put('/:id', async (req, resp) => {
-    try {
-        const actualizado = await Valoraciones.findByIdAndUpdate(
-            req.params.id, req.body, { new: true }
-        );
-
-        if (!actualizado) {
-            return resp.status(404).json({ mensaje: "Valoración no encontrada" });
-        }
-
-        resp.status(200).json(actualizado);
-    } catch (error) {
-        resp.status(400).json({ mensaje: error.message });
-    }
-});
-
-// Delete
-route.delete('/:id', async (req, resp) => {
-    try {
-        const eliminado = await Valoraciones.findByIdAndDelete(req.params.id);
-
-        if (!eliminado) {
-            return resp.status(404).json({ mensaje: "Valoración no encontrada" });
-        }
-
-        resp.status(200).json({ mensaje: 'Valoración eliminada' });
-    } catch (error) {
-        resp.status(400).json({ mensaje: error.message });
-    }
-});
-
-// Obtener datos
-route.get('/', async (req, resp) => {
+// Listar todas
+router.get('/', async (req, res) => {
     try {
         const datos = await Valoraciones.find();
-        resp.json(datos);
+        res.json(datos);
     } catch (error) {
-        resp.status(500).json({ mensaje: error.message });
+        res.status(500).json({ mensaje: error.message });
     }
 });
 
-module.exports = route;
+// Obtener por ID
+router.get('/:id', async (req, res) => {
+    try {
+        const valoracion = await Valoraciones.findById(req.params.id);
+        if (!valoracion) return res.status(404).json({ mensaje: "Valoración no encontrada" });
+        res.json(valoracion);
+    } catch (error) {
+        res.status(400).json({ mensaje: error.message });
+    }
+});
+
+// Actualizar por ID
+router.put('/:id', async (req, res) => {
+    try {
+        const actualizado = await Valoraciones.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        if (!actualizado) return res.status(404).json({ mensaje: "Valoración no encontrada" });
+        res.json(actualizado);
+    } catch (error) {
+        res.status(400).json({ mensaje: error.message });
+    }
+});
+
+// Eliminar por ID
+router.delete('/:id', async (req, res) => {
+    try {
+        const eliminado = await Valoraciones.findByIdAndDelete(req.params.id);
+        if (!eliminado) return res.status(404).json({ mensaje: "Valoración no encontrada" });
+        res.json({ mensaje: "Valoración eliminada" });
+    } catch (error) {
+        res.status(400).json({ mensaje: error.message });
+    }
+});
+
+module.exports = router;
