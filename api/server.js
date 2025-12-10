@@ -21,6 +21,7 @@ const EstadisticasRoutes = require('./routes/EstadisticasRoutes');
 const ConfiguracionRoutes = require('./routes/ConfiguracionRoutes');
 const MultimediaRoutes = require('./routes/MultimediaRoutes');
 const Socios_AliadosRoutes = require('./routes/Socios_AliadosRoutes');
+const Solicitud_IntercambioRoutes = require('./routes/Solicitud_IntercambioRoutes');
 
 // Middlewares
 app.use(cors());
@@ -41,6 +42,7 @@ app.use('/api/historial_conexiones', Historial_conexionesRoutes);
 app.use('/api/historial_trueque', Historial_truequeRoutes);
 app.use('/api/Sesiones_Agendadas', Sesiones_AgendadasRoutes);
 app.use('/api/Socios_Aliados', Socios_AliadosRoutes);
+app.use('/api/solicitudes', Solicitud_IntercambioRoutes);
 app.use('/api/Roles', RolesRoutes);
 app.use('/api/Reportes', ReportesRoutes);
 app.use('/api/Notificaciones', NotificacionesRoutes);
