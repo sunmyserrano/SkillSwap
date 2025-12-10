@@ -16,11 +16,12 @@ function cargarDatos() {
                 tbody.append(`
                     <tr>
                         <td>${Favoritos.Usuario_Id}</td>
-                        <td>${Favoritos.Favoritos}</td>
-
+                        <td>${Favoritos.Favoritos.Favorito_Id}</td>
+                        <td>${Favoritos.Favoritos.Tipo}</td>
+                        
                         <td>
-                            <button class="btn btn-primary btn-sm" onclick="editarFavoritos('${Favoritos.Usuario_Id}')">Editar</button>
-                            <button class="btn btn-danger btn-sm" onclick="eliminarFavoritos('${Favoritos.Usuario_Id}')">Eliminar</button>
+                            <button class="btn btn-primary btn-sm" onclick="editarFavoritos('${Favoritos._id}')">Editar</button>
+                            <button class="btn btn-danger btn-sm" onclick="eliminarFavoritos('${Favoritos._id}')">Eliminar</button>
                         </td>
                     </tr>
                 `);
@@ -48,70 +49,106 @@ function eliminarFavoritos(id) {
 
 
 // EDITAR Favoritos
-
 function editarFavoritos(id) {
 
     $.ajax({
         type: "GET",
         url: `${APIURL}/${id}`,
-        success: function (Favoritos) {
+        success: function (favorito) {
 
-            $("#Usuario_IdFavoritos").val(Favoritos.Usuario_Id);
-            $("#Favoritos").val(Favoritos.Favoritos);
+            // Llenar campos del modal según schema actual
+            $("#idMongo").val(favorito._id);
+            $("#Usuario_Id").val(favorito.Usuario_Id);
+            $("#Favoritos_Tipo").val(favorito.Favoritos?.Tipo);
+            $("#Favorito_Id").val(favorito.Favoritos?.Favorito_Id);
 
-            $(".modal-title").text("Editar Favoritos");
+            // Cambiar título
+            $("#modalTitle").text("Editar Favorito");
 
-            $("#modalId").modal("show");
+            // Abrir modal con Bootstrap 5
+            const modal = new bootstrap.Modal(document.getElementById("modalId"));
+            modal.show();
+        },
+        error: function (xhr) {
+            console.error(xhr);
+            alert("No se pudo cargar el registro para editar.");
         }
     });
 }
 
-
-
-// GUARDAR
+// ---------------------------
+// Submit del formulario Favoritos
+// ---------------------------
 $("#FavoritosFormulario").on("submit", function (e) {
     e.preventDefault();
 
-    let id = $("#Usuario_IdFavoritos").val();
+    // Leer valores del formulario (IDs del modal que te propuse)
+    const idMongo = $("#idMongo").val(); // si viene vacío => crear; si trae valor => editar
+    const Usuario_Id = $("#Usuario_Id").val()?.trim();
+    const Favoritos_Tipo = $("#Favoritos_Tipo").val();
+    const Favorito_Id = $("#Favorito_Id").val()?.trim();
 
-    const datos = {
-        Usuario_Id: $("#Usuario_IdFavoritos").val(),
-        Favoritos: $("#Favoritos").val()
-    };
-
-    if (Usuario_Id) {
-
-        $.ajax({
-            type: "PUT",
-            url: `${APIURL}/${id}`,
-            data: JSON.stringify(datos),
-            contentType: "application/json",
-            success: function () {
-                alert("Favoritos actualizado");
-                $("#FavoritosFormulario")[0].reset();
-                $("#Usuario_IdFavoritos").val("");
-                $("#modalId").modal("hide");
-                cargarDatos();
-            }
-        });
-
+    // Validación básica
+    if (!Usuario_Id || !Favoritos_Tipo || !Favorito_Id) {
+        alert("Completa todos los campos antes de guardar.");
         return;
     }
 
-  
+    // Construir payload según tu schema
+    const datos = {
+        Usuario_Id: Usuario_Id,
+        Favoritos: {
+            Tipo: Favoritos_Tipo,
+            Favorito_Id: Favorito_Id
+        }
+    };
+
+    // Función auxiliar para cerrar modal con Bootstrap 5
+    function cerrarModal() {
+        const modalEl = document.getElementById('modalId');
+        const modalInstance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+        modalInstance.hide();
+    }
+
+    // Si idMongo tiene valor, es edición -> PUT /api/...
+    if (idMongo) {
+        $.ajax({
+            type: "PUT",
+            url: `${APIURL}/${idMongo}`,   // asumo que APIURL está definido en tu archivo
+            data: JSON.stringify(datos),
+            contentType: "application/json",
+            success: function () {
+                alert("Favorito actualizado");
+                $("#FavoritosFormulario")[0].reset();
+                $("#idMongo").val("");
+                cerrarModal();
+                if (typeof cargarDatos === "function") cargarDatos();
+            },
+            error: function (xhr) {
+                console.error(xhr);
+                alert("Error al actualizar favorito: " + (xhr.responseText || xhr.statusText));
+            }
+        });
+        return;
+    }
+
+    // Si no hay idMongo -> crear (POST)
     $.ajax({
         type: "POST",
         url: APIURL,
         data: JSON.stringify(datos),
         contentType: "application/json",
         success: function () {
-            alert("Favoritos guardado");
+            alert("Favorito guardado");
             $("#FavoritosFormulario")[0].reset();
-            $("#modalId").modal("hide");
-            cargarDatos();
+            cerrarModal();
+            if (typeof cargarDatos === "function") cargarDatos();
+        },
+        error: function (xhr) {
+            console.error(xhr);
+            alert("Error al guardar favorito: " + (xhr.responseText || xhr.statusText));
         }
     });
-
 });
 
 // ======================================================
