@@ -1,57 +1,58 @@
 const express = require("express");
-const route = express.Router();
-
+const router = express.Router();
 const Estadisticas = require("../models/Estadisticas");
 
-// Crear registro
-route.post("/", async (req, resp) => {
+// Crear
+router.post("/", async (req, res) => {
     try {
-        const nueva = new Estadisticas(req.body);
-        const guardada = await nueva.save();
-        resp.status(201).json(guardada);
-    } catch (error) {
-        resp.status(400).json({ mensaje: error.message });
+        const count = await Estadisticas.countDocuments();
+        const nuevo = new Estadisticas({
+            Id: count + 1,
+            ...req.body
+        });
+        const guardado = await nuevo.save();
+        res.json(guardado);
+    } catch (e) {
+        res.status(500).json({ error: e.message });
     }
 });
 
-// Obtener todos
-route.get("/", async (req, resp) => {
-    const datos = await Estadisticas.find();
-    resp.json(datos);
+// Listar
+router.get("/", async (req, res) => {
+    res.json(await Estadisticas.find());
 });
 
-// Obtener por id
-route.get("/:id", async (req, resp) => {
-    const dato = await Estadisticas.findOne({ Id: req.params.id });
-    resp.json(dato);
+// Obtener uno
+router.get("/:id", async (req, res) => {
+    const item = await Estadisticas.findOne({ Id: Number(req.params.id) });
+    res.json(item);
 });
 
 // Actualizar
-route.put("/:id", async (req, resp) => {
+router.put("/:id", async (req, res) => {
     try {
         const actualizado = await Estadisticas.findOneAndUpdate(
             { Id: req.params.id },
             req.body,
             { new: true }
         );
-
-        if (!actualizado)
-            return resp.status(404).json({ mensaje: "Estadística no encontrada" });
-
-        resp.json(actualizado);
-    } catch (error) {
-        resp.status(400).json({ mensaje: error.message });
+        res.json(actualizado);
+    } catch (e) {
+        res.status(500).json({ error: e.message });
     }
 });
 
-// Eliminar
-route.delete("/:id", async (req, resp) => {
-    try {
-        const eliminado = await Estadisticas.findOneAndDelete({ Id: req.params.id });
-        resp.json(eliminado);
-    } catch (error) {
-        resp.status(400).json({ mensaje: error.message });
+// ELIMINAR ✔✔✔
+router.delete("/:id", async (req, res) => {
+    const eliminado = await Estadisticas.findOneAndDelete({ Id: Number(req.params.id) });
+
+    if (!eliminado) {
+        return res.status(404).json({ error: "No existe la estadística" });
     }
+
+    res.json({ mensaje: "Estadística eliminada" });
 });
 
-module.exports = route;
+
+module.exports = router;
+
