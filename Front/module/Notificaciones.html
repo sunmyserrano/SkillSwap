@@ -1,18 +1,74 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Gestión de Notificaciones</title>
 
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script src="notificaciones.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+
 </head>
 
-<body class="container mt-4">
+<body>
+ <header class="header mb-3">
+    <nav class="navbar navbar-expand-lg custom-header py-3 shadow-sm">
+        <div class="container-fluid d-flex align-items-center justify-content-between">
+
+            <div class="d-flex align-items-center gap-3">
+                <a class="navbar-brand d-flex align-items-center me-2" href="/Front/module/index.html">
+                    <span class="fw-bold text-white">SkillSwap</span>
+                </a>
+
+                <div class="d-flex align-items-center gap-2">
+
+                    <!-- Menú Administración -->
+                    <div class="dropdown">
+                        <button class="btn btn-outline-main text-white dropdown-toggle" id="adminBtn"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Administración
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-start shadow menu-white" aria-labelledby="adminBtn">
+                            <li><a class="dropdown-item text-white" href="/Front/module/usuarios.html">Usuario</a></li>
+                            <li><a class="dropdown-item text-white" href="/Front/module/rol.html">Roles</a></li>
+                            <li><a class="dropdown-item text-white" href="/Front/module/socios_aliados.html">Socios Aliados</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Menú Informes -->
+                    <div class="dropdown">
+                        <button class="btn btn-outline-main text-white dropdown-toggle" id="informesBtn"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Informes
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-start shadow menu-white" aria-labelledby="informesBtn">
+                            <li><a class="dropdown-item text-white" href="/Front/module/habilidadesTrueque.html">Historial trueque</a></li>
+                            <li><a class="dropdown-item text-white" href="/Front/module/Historial_conexiones.html">Historial conexiones</a></li>
+                            <li><a class="dropdown-item text-white" href="/Front/module/solicitud_intercambio.html">Solicitud intercambio</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="d-flex align-items-center gap-3">
+                <a href="/Front/module/Notificaciones.html" class="text-white fs-5" title="Notificaciones">
+                    <i class="fa-solid fa-bell"></i>
+                </a>
+                <a href="/Front/module/configuracion.html" class="text-white fs-5" title="Configuración">
+                    <i class="fa-solid fa-gear"></i>
+                </a>
+            </div>
+
+        </div>
+    </nav>
+</header>
+
 
     <h2 class="text-center mb-4">Gestión de Notificaciones</h2>
     <div class="card p-3 mb-4">
@@ -78,4 +134,5 @@
     </table>
 
 </body>
+
 </html>

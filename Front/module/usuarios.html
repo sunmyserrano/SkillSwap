@@ -6,138 +6,154 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Usuarios</title>
 
+    <!-- TU CSS -->
+    <link rel="stylesheet" href="/Front/css/usuario.css">
+
+    <!-- BOOTSTRAP Y LIBRERÍAS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 
-<body>
+<body class="bg-light">
 
-    <header>
-        <div id="seccionMenu"></div>
-    </header>
+    <header class="header mb-3">
+        <nav class="navbar navbar-expand-lg custom-header py-3 shadow-sm">
+            <div class="container-fluid d-flex align-items-center justify-content-between">
 
-<!-- Intento acceso configuracion-->
+                <div class="d-flex align-items-center gap-3">
+                    <a class="navbar-brand d-flex align-items-center me-2" href="/Front/module/index.html">
+                        <span class="fw-bold text-white">SkillSwap</span>
+                    </a>
 
-                    <!-- PERFIL con Configuración -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-white" href="#" id="perfilDropdown" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false">
-                            Perfil
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="perfilDropdown">
-                            <li>
-                                <a class="dropdown-item" href="/Front/module/usuarios.html">Usuarios</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="/Front/module/favoritos.html">Favoritos</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="/Front/module/configuracion.html">Configuración</a>
-                            </li>
-                        </ul>
-                    </li>
+                    <div class="d-flex align-items-center gap-2">
 
-                </ul>
+                        <div class="dropdown">
+                            <button class="btn btn-outline-main text-white dropdown-toggle" id="adminBtn"
+                                data-bs-toggle="dropdown">
+                                Administración
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-start shadow menu-white">
+                                <li><a class="dropdown-item text-dark" href="/Front/module/usuarios.html">Usuario</a></li>
+                                <li><a class="dropdown-item text-dark" href="/Front/module/rol.html">Roles</a></li>
+                                <li><a class="dropdown-item text-dark" href="/Front/module/socios_aliados.html">Socios Aliados</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="dropdown">
+                            <button class="btn btn-outline-main text-white dropdown-toggle" id="informesBtn"
+                                data-bs-toggle="dropdown">
+                                Informes
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-start shadow menu-white">
+                                <li><a class="dropdown-item text-dark" href="/Front/module/habilidadesTrueque.html">Historial trueque</a></li>
+                                <li><a class="dropdown-item text-dark" href="/Front/module/Historial_conexiones.html">Historial conexiones</a></li>
+                                <li><a class="dropdown-item text-dark" href="/Front/module/solicitud_intercambio.html">Solicitud intercambio</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="dropdown">
+                            <button class="btn btn-outline-main text-white dropdown-toggle" id="controlBtn"
+                                data-bs-toggle="dropdown">
+                                Centro de Control
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-start shadow menu-white">
+                                <li><a class="dropdown-item text-dark" href="/Front/module/valoraciones.html">Valoraciones</a></li>
+                                <li><a class="dropdown-item text-dark" href="/Front/module/Habilidades.html">Habilidades</a></li>
+                                <li><a class="dropdown-item text-dark" href="/Front/module/estadisticas.html">Estadísticas</a></li>
+                                <li><a class="dropdown-item text-dark" href="/Front/module/archivo_multimedia.html">Multimedia</a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-center gap-3">
+                    <a href="/Front/module/Notificaciones.html" class="text-white fs-5">
+                        <i class="fa-solid fa-bell"></i>
+                    </a>
+                    <a href="/Front/module/configuracion.html" class="text-white fs-5">
+                        <i class="fa-solid fa-gear"></i>
+                    </a>
+                </div>
+
             </div>
-        </div>
-    </nav>
+        </nav>
+    </header>
 
     <div class="container mt-4">
 
-        <div class="row justify-content-center">
-            <h1>Usuarios</h1>
-        </div>
+        <h1 class="text-center mb-4">Usuarios</h1>
 
+        <div class="card usuario-card p-4 mb-5 shadow">
 
-        <div class="text-center my-4">
-            <button type="button" class="btn btn-primary btn-lg px-5" data-bs-toggle="modal" data-bs-target="#modalId">
-                Crear
-            </button>
-        </div>
+            <h4 class="text-center mb-4">Agregar Usuario</h4>
 
-        <!-- Modal -->
-        <div class="modal fade" id="modalId" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
+            <form id="usuarioFormulario">
 
-                    <div class="modal-header">
-                        <h5 class="modal-title">Agregar Usuario</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <input type="hidden" id="idUsuario">
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Rol ID</label>
+                        <input type="number" class="form-control" id="rol_id" name="rol_id">
+                        <small class="text-muted">Asignado automáticamente</small>
                     </div>
 
-                    <div class="modal-body">
-                        <form id="usuarioFormulario">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Nombre</label>
+                        <input type="text" required class="form-control" id="nombre" name="nombre">
+                    </div>
 
-                        
-                            <input type="hidden" id="idUsuario">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Apellido</label>
+                        <input type="text" required class="form-control" id="apellido" name="apellido">
+                    </div>
 
-                            <div class="mb-3">
-                                <label class="form-label">Rol ID</label>
-                                <input type="number" class="form-control" id="rol_id" name="rol_id">
-                                <small class="text-muted">Asignado automáticamente</small>
-                            </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Correo Electrónico</label>
+                        <input type="email" required class="form-control" id="correo_electronico" name="correo_electronico">
+                    </div>
 
-                            <div class="mb-3">
-                                <label class="form-label">Nombre</label>
-                                <input type="text" required class="form-control" id="nombre" name="nombre">
-                            </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Contraseña</label>
+                        <input type="password" required class="form-control" id="contrasena" name="contrasena">
+                    </div>
 
-                            <div class="mb-3">
-                                <label class="form-label">Apellido</label>
-                                <input type="text" required class="form-control" id="apellido" name="apellido">
-                            </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Teléfono</label>
+                        <input type="text" required class="form-control" id="telefono" name="telefono">
+                    </div>
 
-                            <div class="mb-3">
-                                <label class="form-label">Correo Electrónico</label>
-                                <input type="email" required class="form-control" id="correo_electronico"
-                                    name="correo_electronico">
-                            </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Fecha Registro</label>
+                        <input type="date" required class="form-control" id="fecha_registro" name="fecha_registro">
+                    </div>
 
-                            <div class="mb-3">
-                                <label class="form-label">Contraseña</label>
-                                <input type="password" required class="form-control" id="contrasena" name="contrasena">
-                            </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Estado</label>
+                        <select class="form-select" id="estado" name="estado">
+                            <option value="Activo" selected>Activo</option>
+                            <option value="Inactivo">Inactivo</option>
+                        </select>
+                    </div>
 
-                            <div class="mb-3">
-                                <label class="form-label">Teléfono</label>
-                                <input type="text" required class="form-control" id="telefono" name="telefono">
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Fecha Registro</label>
-                                <input type="date" required class="form-control" id="fecha_registro"
-                                    name="fecha_registro">
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Estado</label>
-                                <select class="form-select" id="estado" name="estado">
-                                    <option value="Activo" selected>Activo</option>
-                                    <option value="Inactivo">Inactivo</option>
-                                </select>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Dirección</label>
-                                <input type="text" required class="form-control" id="direccion" name="direccion">
-                            </div>
-
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-primary">Guardar</button>
-                                <button type="reset" class="btn btn-danger">Limpiar</button>
-                            </div>
-
-                        </form>
-
+                    <div class="col-md-12 mb-3">
+                        <label class="form-label">Dirección</label>
+                        <input type="text" required class="form-control" id="direccion" name="direccion">
                     </div>
 
                 </div>
-            </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn-main px-4">Guardar</button>
+                    <button type="reset" class="btn-outline-main px-4">Limpiar</button>
+                </div>
+
+            </form>
         </div>
 
-        <!-- Tabla -->
         <div class="table-responsive mt-5">
             <table class="table table-primary text-center">
                 <thead>
@@ -159,14 +175,11 @@
 
     </div>
 
-    <!-- Scripts -->
-    <script src="../js/usuario.js"></script>
-    <script src="../js/menu.js"></script>
-
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+
+<script src="../js/usuario.js"></script>
+<script src="../js/menu.js"></script>
 
 </body>
-
 </html>

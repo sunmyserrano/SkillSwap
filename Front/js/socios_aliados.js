@@ -1,4 +1,4 @@
-const APIURL = "http://localhost:3000/api/Socios_Aliados"; 
+const APIURL = "http://localhost:3000/api/Socios_Aliados";
 
 // CARGAR DATOS
 function cargarDatos() {
@@ -24,11 +24,15 @@ function cargarDatos() {
                     </tr>
                 `);
             });
+        },
+        error: function (xhr) {
+            console.error("Error al cargar:", xhr.responseText);
+            alert("Error al cargar los datos.");
         }
     });
 }
 
-// ELIMINAR SOCIO
+// ELIMINAR
 function eliminarSocio(id) {
     if (!confirm("¿Seguro de eliminar?")) return;
 
@@ -38,6 +42,9 @@ function eliminarSocio(id) {
         success: function () {
             alert("Socio eliminado");
             cargarDatos();
+        },
+        error: function (xhr) {
+            console.error("Error:", xhr.responseText);
         }
     });
 }
@@ -48,19 +55,21 @@ function editarSocio(id) {
         type: "GET",
         url: `${APIURL}/${id}`,
         success: function (socio) {
-            $("#idSocio").val(id);  
+            $("#idSocio").val(socio._id);
             $("#Nombre").val(socio.Nombre);
             $("#Tipo").val(socio.Tipo);
             $("#Contacto").val(socio.Contacto);
             $("#Descripcion").val(socio.Descripcion);
             $("#URL_sitio").val(socio.URL_sitio);
-
-            $(".modal-title").text("Editar Socio Aliado");
+        },
+        error: function (xhr) {
+            console.error("Error GET ID:", xhr.responseText);
+            alert("No se pudo cargar el socio.");
         }
     });
 }
 
-// GUARDAR SOCIO
+// GUARDAR / ACTUALIZAR
 $("#sociosFormulario").on("submit", function (e) {
     e.preventDefault();
 
@@ -74,8 +83,8 @@ $("#sociosFormulario").on("submit", function (e) {
         URL_sitio: $("#URL_sitio").val()
     };
 
+    // EDITAR
     if (id) {
-        // ACTUALIZAR
         $.ajax({
             type: "PUT",
             url: `${APIURL}/${id}`,
@@ -86,6 +95,9 @@ $("#sociosFormulario").on("submit", function (e) {
                 $("#sociosFormulario")[0].reset();
                 $("#idSocio").val("");
                 cargarDatos();
+            },
+            error: function (xhr) {
+                console.error("Error PUT:", xhr.responseText);
             }
         });
         return;
@@ -98,12 +110,15 @@ $("#sociosFormulario").on("submit", function (e) {
         data: JSON.stringify(datos),
         contentType: "application/json",
         success: function () {
-            alert("Socio guardado");
+            alert("Socio creado");
             $("#sociosFormulario")[0].reset();
             cargarDatos();
+        },
+        error: function (xhr) {
+            console.error("Error POST:", xhr.responseText);
         }
     });
 });
 
-// CARGAR DATOS AL INICIO
+// CARGAR AL INICIO
 cargarDatos();

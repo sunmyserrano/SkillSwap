@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     activarSeleccionEstrellas();
 });
 
-// Selección de estrellas
+
 function activarSeleccionEstrellas() {
     document.querySelectorAll(".star-rating span").forEach(star => {
         star.addEventListener("click", function () {
@@ -24,7 +24,7 @@ function activarSeleccionEstrellas() {
     });
 }
 
-// Generar estrellas para mostrar
+
 function generarEstrellas(num) {
     let html = "";
     for (let i = 1; i <= 5; i++) {
@@ -35,7 +35,7 @@ function generarEstrellas(num) {
     return html;
 }
 
-// Cargar todas las valoraciones
+
 function cargarValoraciones() {
     fetch(APIURL)
         .then(res => res.json())
@@ -48,6 +48,7 @@ function cargarValoraciones() {
                     <tr>
                         <td>${generarEstrellas(v.Puntuacion)}</td>
                         <td>${v.Comentario ?? ""}</td>
+                        <td>${v.Fecha ?? ""}</td>
                         <td>
                             <button class="btn btn-warning btn-sm" onclick="editarValoracion('${v._id}')">Editar</button>
                             <button class="btn btn-danger btn-sm" onclick="eliminarValoracion('${v._id}')">Eliminar</button>
@@ -76,20 +77,29 @@ function eliminarValoracion(id) {
     });
 }
 
-// Editar valoración
 function editarValoracion(id) {
     $.ajax({
         type: "GET",
         url: `${APIURL}/${id}`,
         success: function (v) {
+
+            $("#idValoracion").val(v._id); 
+
             $("#intercambioID").val(v.Intercambio_Id);
             $("#puntuacion").val(v.Puntuacion);
             $("#comentario").val(v.Comentario);
-            $("#fecha").val(v.Fecha.split("T")[0]); 
+            $("#fecha").val(v.Fecha.split("T")[0]);
 
-            // Marcar estrellas
+            
             document.querySelectorAll(".star-rating span").forEach(s => s.classList.remove("selected"));
-            document.querySelectorAll(`.star-rating span[data-value="${v.Puntuacion}"]`).forEach(s => s.classList.add("selected"));
+            let puntuacion = v.Puntuacion;
+            document.querySelectorAll(".star-rating span").forEach(s => {
+                if (s.getAttribute("data-value") <= puntuacion) {
+                    s.classList.add("selected");
+                }
+            });
+
+            $("#btnGuardar").text("Actualizar");
         },
         error: function (xhr) {
             alert("Error al obtener valoración: " + xhr.responseText);
@@ -97,7 +107,7 @@ function editarValoracion(id) {
     });
 }
 
-// Guardar / actualizar
+
 $("#valoracionFormulario").on("submit", function (e) {
     e.preventDefault();
 
@@ -111,7 +121,7 @@ $("#valoracionFormulario").on("submit", function (e) {
     };
 
     if (id) {
-        // Actualizar
+       
         $.ajax({
             type: "PUT",
             url: `${APIURL}/${id}`,
@@ -127,7 +137,7 @@ $("#valoracionFormulario").on("submit", function (e) {
             }
         });
     } else {
-        // Crear
+        
         $.ajax({
             type: "POST",
             url: APIURL,
@@ -149,4 +159,6 @@ function limpiarFormulario() {
     $("#valoracionFormulario")[0].reset();
     $("#idValoracion").val("");
     document.querySelectorAll(".star-rating span").forEach(s => s.classList.remove("selected"));
+
+    $("#btnGuardar").text("Guardar");
 }
