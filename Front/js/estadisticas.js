@@ -3,6 +3,9 @@ const API_URL = "http://localhost:3000/api/estadisticas";
 let editando = false;
 let idEditando = null;
 
+// VARIABLE PARA LA GRAFICA
+let graficaUsuarios = null;
+
 $(document).ready(function () {
 
     cargarEstadisticas();
@@ -24,7 +27,6 @@ $(document).ready(function () {
         }
     });
 
-    // Delegar eventos del botón Editar/Eliminar
     $("#tablaDatos").on("click", ".btn-editar", function () {
         const id = $(this).data("id");
         cargarEnFormulario(id);
@@ -32,12 +34,6 @@ $(document).ready(function () {
 
     $("#tablaDatos").on("click", ".btn-eliminar", function () {
         const id = $(this).data("id");
-
-        if (!id) {
-            console.error("ERROR: id undefined en eliminar");
-            alert("No se pudo identificar la estadística.");
-            return;
-        }
 
         if (confirm("¿Eliminar estadística?")) {
             eliminarEstadistica(id);
@@ -53,6 +49,7 @@ function cargarEstadisticas() {
         method: "GET",
         success: function (lista) {
             renderTabla(lista);
+            renderGrafica(lista); // <--- ACTUALIZA LA GRAFICA
         },
         error: function (err) {
             console.error("Error al cargar estadísticas:", err);
@@ -162,5 +159,38 @@ function renderTabla(lista) {
                 </td>
             </tr>
         `);
+    });
+}
+
+// ======================= GRAFICA ============================
+
+function renderGrafica(lista) {
+
+    const fechas = lista.map(item => item.Fecha?.substring(0, 10));
+    const totales = lista.map(item => item.Total_usuarios);
+
+    const ctx = document.getElementById("graficaUsuarios").getContext("2d");
+
+    if (graficaUsuarios) {
+        graficaUsuarios.destroy();
+    }
+
+    graficaUsuarios = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: fechas,
+            datasets: [{
+                label: "Total de Usuarios",
+                data: totales,
+                borderWidth: 2,
+                tension: 0.3
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
     });
 }
