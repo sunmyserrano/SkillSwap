@@ -17,7 +17,7 @@
         <div class="container-fluid d-flex align-items-center justify-content-between">
 
             <div class="d-flex align-items-center gap-3">
-                <a class="navbar-brand d-flex align-items-center me-2" href="/">
+                <a class="navbar-brand d-flex align-items-center me-2" href="/Front/module">
                     <span class="fw-bold">SkillSwap</span>
                 </a>
 
@@ -62,53 +62,6 @@
     <div class="row justify-content-center">
         <h1>Historial de Trueques</h1>
     </div>
-
-    <div class="row justify-content-center mt-4">
-        <div class="col-md-8">
-
-            <div class="card shadow p-4">  
-                <h3 class="text-center mb-3">Formulario Historial</h3>
-
-                <form id="historialFormulario">
-                    <input type="hidden" id="Historial_Id">
-
-                    <div class="mb-3">
-                        <label class="form-label">Habilidad 1</label>
-                        <input type="text" required class="form-control" id="Habilidad1" name="Habilidad1">
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Habilidad 2</label>
-                        <input type="text" required class="form-control" id="Habilidad2" name="Habilidad2">
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Fecha inicio</label>
-                        <input type="date" required class="form-control" id="fecha_inicio" name="fecha_inicio">
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Fecha fin</label>
-                        <input type="date" required class="form-control" id="fecha_fin" name="fecha_fin">
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Estado</label>
-                        <select class="form-select" id="estado" name="estado" required>
-                            <option value="Activo">Activo</option>
-                            <option value="Inactivo">Inactivo</option>
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Valoración final</label>
-                        <input type="number" required class="form-control" id="Valoracion_final" name="Valoracion_final" min="0" max="5">
-                    </div>
-
-                    <div class="text-center mb-4">
-                        <button type="submit" class="btn btn-primary">Guardar</button>
-                        <button type="reset" class="btn btn-danger">Limpiar</button>
-                    </div>
                 </form>
             </div>
         </div>
@@ -120,8 +73,8 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Habilidad 1</th>
-                    <th>Habilidad 2</th>
+                    <th>Habilidad solicitada</th>
+                    <th>Habilidad ofrecida</th>
                     <th>Fecha inicio</th>
                     <th>Fecha fin</th>
                     <th>Estado</th>
@@ -135,7 +88,7 @@
 
 </div>
 
-<script src="../js/HistorialTrueque.js"></script>
+<script src="../js/Historial_trueque.js"></script>
 <script src="../js/menu.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>

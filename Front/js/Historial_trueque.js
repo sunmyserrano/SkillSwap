@@ -24,8 +24,7 @@ function cargarDatos() {
                         <td>${Historial_trueque.Valoracion_final}</td>
 
                         <td>
-                            <button class="btn btn-primary btn-sm" onclick="editarHistorial_trueque('${Historial_trueque.Usuario_Id}')">Editar</button>
-                            <button class="btn btn-danger btn-sm" onclick="eliminarHistorial_trueque('${Historial_trueque.Usuario_Id}')">Eliminar</button>
+                            <button class="btn btn-danger btn-sm" onclick="eliminarHistorial_trueque('${Historial_trueque._id}')">Eliminar</button>
                         </td>
                     </tr>
                 `);

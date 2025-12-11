@@ -4,7 +4,7 @@ const HabilidadesSchema = new mongoose.Schema(
 
 
     {
-        nombre: {
+        Nombre: {
             type: String,
             required: true
         },
@@ -18,10 +18,11 @@ const HabilidadesSchema = new mongoose.Schema(
         },
         Nivel: {
             type: String,
+            enum: ["Basico", "Intermedio", "Avanzado"], // recomendado
             required: true
         },
         Usuario_Id: {
-            type: Number,
+            type: String,
             required: true
         }
     }

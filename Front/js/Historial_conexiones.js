@@ -21,7 +21,6 @@ function cargarDatos() {
                         <td>${Historial_conexiones.Dispositivo}</td>
 
                         <td>
-                            <button class="btn btn-primary btn-sm" onclick="editarHistorial_conexiones('${Historial_conexiones.Usuario_Id}')">Editar</button>
                             <button class="btn btn-danger btn-sm" onclick="eliminarHistorial_conexiones('${Historial_conexiones.Usuario_Id}')">Eliminar</button>
                         </td>
                     </tr>

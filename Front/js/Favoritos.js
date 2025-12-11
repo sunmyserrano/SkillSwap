@@ -129,26 +129,26 @@ $("#FavoritosFormulario").on("submit", function (e) {
                 alert("Error al actualizar favorito: " + (xhr.responseText || xhr.statusText));
             }
         });
-        return;
     }
-
-    // Si no hay idMongo -> crear (POST)
-    $.ajax({
-        type: "POST",
-        url: APIURL,
-        data: JSON.stringify(datos),
-        contentType: "application/json",
-        success: function () {
-            alert("Favorito guardado");
-            $("#FavoritosFormulario")[0].reset();
-            cerrarModal();
-            if (typeof cargarDatos === "function") cargarDatos();
-        },
-        error: function (xhr) {
-            console.error(xhr);
-            alert("Error al guardar favorito: " + (xhr.responseText || xhr.statusText));
-        }
-    });
+    else {
+        // Si no hay idMongo -> crear (POST)
+        $.ajax({
+            type: "POST",
+            url: APIURL,
+            data: JSON.stringify(datos),
+            contentType: "application/json",
+            success: function () {
+                alert("Favorito guardado");
+                $("#FavoritosFormulario")[0].reset();
+                cerrarModal();
+                if (typeof cargarDatos === "function") cargarDatos();
+            },
+            error: function (xhr) {
+                console.error(xhr);
+                alert("Error al guardar favorito: " + (xhr.responseText || xhr.statusText));
+            }
+        });
+    }
 });
 
 // ======================================================

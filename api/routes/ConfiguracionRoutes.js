@@ -62,3 +62,8 @@ route.put("/:id", async (req, resp) => {
             req.body,
             { new: true }
         );
+    }
+    catch (error) {
+        resp.status(400).json({ mensaje: error.message });
+    }
+});

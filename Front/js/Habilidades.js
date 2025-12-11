@@ -15,15 +15,15 @@ function cargarDatos() {
             responseHabilidades.forEach(Habilidades => {
                 tbody.append(`
                     <tr>
-                        <td>${Habilidades.nombre}</td>
+                        <td>${Habilidades.Nombre}</td>
                         <td>${Habilidades.Descripcion}</td>
                         <td>${Habilidades.Categoria}</td>
                         <td>${Habilidades.Nivel}</td>
                         <td>${Habilidades.Usuario_Id}</td>
 
                         <td>
-                            <button class="btn btn-primary btn-sm" onclick="editarHabilidades('${Habilidades.Usuario_Id}')">Editar</button>
-                            <button class="btn btn-danger btn-sm" onclick="eliminarHabilidades('${Habilidades.Usuario_Id}')">Eliminar</button>
+                            <button class="btn btn-primary btn-sm" onclick="editarHabilidades('${Habilidades._id}')">Editar</button>
+                            <button class="btn btn-danger btn-sm" onclick="eliminarHabilidades('${Habilidades._id}')">Eliminar</button>
                         </td>
                     </tr>
                 `);
@@ -59,11 +59,12 @@ function editarHabilidades(id) {
         url: `${APIURL}/${id}`,
         success: function (Habilidades) {
 
-            $("#nombre").val(Habilidades.nombre);
+            $("#Nombre").val(Habilidades.Nombre);
             $("#Descripcion").val(Habilidades.Descripcion);
             $("#Categoria").val(Habilidades.Categoria);
             $("#Nivel").val(Habilidades.Nivel);
-            $("#Usuario_IdHabilidades").val(Habilidades.Usuario_Id);
+            $("#Usuario_Id").val(Habilidades.Usuario_Id);
+            $("#idMongo").val(Habilidades._id);
 
             $(".modal-title").text("Editar Habilidades");
 
@@ -78,48 +79,63 @@ function editarHabilidades(id) {
 $("#HabilidadesFormulario").on("submit", function (e) {
     e.preventDefault();
 
-    let id = $("#Usuario_IdHabilidades").val();
+    // Leer valores del formulario (IDs del modal que te propuse)
+    const idMongo = $("#idMongo").val(); // si viene vacío => crear; si trae valor => editar
 
     const datos = {
-        nombre: $("#nombre").val(),
+        Nombre: $("#Nombre").val(),
         Descripcion: $("#Descripcion").val(),
         Categoria: $("#Categoria").val(),
         Nivel: $("#Nivel").val(),
         Usuario_Id: $("#Usuario_Id").val()
     };
 
-    if (Usuario_Id) {
+    // Validación básica
+    if (!datos.Nombre || !datos.Descripcion || !datos.Categoria || !datos.Nivel || !datos.Usuario_Id) {
+        alert("Completa todos los campos antes de guardar.");
+        return;
+    }
+
+    // Función auxiliar para cerrar modal con Bootstrap 5
+    function cerrarModal() {
+        const modalEl = document.getElementById('modalId');
+        const modalInstance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+        modalInstance.hide();
+    }
+
+    // Si idMongo tiene valor, es edición -> PUT /api/...
+    if (idMongo) {
 
         $.ajax({
             type: "PUT",
-            url: `${APIURL}/${id}`,
+            url: `${APIURL}/${idMongo}`,
             data: JSON.stringify(datos),
             contentType: "application/json",
             success: function () {
                 alert("Habilidades actualizado");
                 $("#HabilidadesFormulario")[0].reset();
-                $("#Usuario_IdHabilidades").val("");
+                $("#Usuario_Id").val("");
                 $("#modalId").modal("hide");
                 cargarDatos();
             }
         });
-
-        return;
     }
+    else {
+        // Si no, es creación -> POST /api/...
 
-  
-    $.ajax({
-        type: "POST",
-        url: APIURL,
-        data: JSON.stringify(datos),
-        contentType: "application/json",
-        success: function () {
-            alert("Habilidades guardado");
-            $("#HabilidadesFormulario")[0].reset();
-            $("#modalId").modal("hide");
-            cargarDatos();
-        }
-    });
+        $.ajax({
+            type: "POST",
+            url: APIURL,
+            data: JSON.stringify(datos),
+            contentType: "application/json",
+            success: function () {
+                alert("Habilidades guardado");
+                $("#HabilidadesFormulario")[0].reset();
+                $("#modalId").modal("hide");
+                cargarDatos();
+            }
+        });
+    }
 
 });
 

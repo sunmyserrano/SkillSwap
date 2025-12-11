@@ -1,6 +1,5 @@
 const express = require('express');
 const route = express.Router();
-
 const Favoritos = require('../models/Favoritos');
 const FavoritosModel = require('../models/Favoritos');
 

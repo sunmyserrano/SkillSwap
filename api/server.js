@@ -47,7 +47,7 @@ app.use('/api/Roles', RolesRoutes);
 app.use('/api/Reportes', ReportesRoutes);
 app.use('/api/Notificaciones', NotificacionesRoutes);
 app.use('/api/estadisticas', EstadisticasRoutes);
-app.use('/api/configuracion', ConfiguracionRoutes);
+//app.use('/api/configuracion', ConfiguracionRoutes);
 app.use('/api/multimedia', MultimediaRoutes);
 
 // Carpeta Frontend
