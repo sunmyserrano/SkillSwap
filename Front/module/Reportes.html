@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    <header class="header mb-3">
+   <header class="header mb-3">
         <nav class="navbar navbar-expand-lg custom-header py-3 shadow-sm">
             <div class="container-fluid d-flex align-items-center justify-content-between">
 
@@ -26,18 +26,20 @@
 
                     <div class="d-flex align-items-center gap-2">
 
-                        <!-- Menú Administración -->
+
                         <div class="dropdown">
                             <button class="btn btn-outline-main text-white dropdown-toggle" id="adminBtn"
                                 data-bs-toggle="dropdown" aria-expanded="false">
                                 Administración
                             </button>
                             <ul class="dropdown-menu dropdown-menu-start shadow menu-white" aria-labelledby="adminBtn">
-                                <li><a class="dropdown-item text-white" href="/Front/module/usuarios.html">Usuario</a>
+                                <li><a class="dropdown-item text-dark" href="/Front/module/usuarios.html">Usuario</a>
                                 </li>
-                                <li><a class="dropdown-item text-white" href="/Front/module/rol.html">Roles</a></li>
-                                <li><a class="dropdown-item text-white" href="/Front/module/socios_aliados.html">Socios
+                                <li><a class="dropdown-item text-dark" href="/Front/module/rol.html">Roles</a></li>
+                                <li><a class="dropdown-item text-dark" href="/Front/module/socios_aliados.html">Socios
                                         Aliados</a></li>
+                                <li><a class="dropdown-item text-dark" href="/Front/module/Reportes.html">Reportes</a>
+                                </li>
                             </ul>
                         </div>
 
@@ -49,17 +51,36 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-start shadow menu-white"
                                 aria-labelledby="informesBtn">
-                                <li><a class="dropdown-item text-white"
+                                <li><a class="dropdown-item text-dark"
                                         href="/Front/module/habilidadesTrueque.html">Historial trueque</a></li>
-                                <li><a class="dropdown-item text-white"
+                                <li><a class="dropdown-item text-dark"
                                         href="/Front/module/Historial_conexiones.html">Historial conexiones</a></li>
-                                <li><a class="dropdown-item text-white"
+                                <li><a class="dropdown-item text-dark"
                                         href="/Front/module/solicitud_intercambio.html">Solicitud intercambio</a></li>
+                            </ul>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-outline-main text-white dropdown-toggle" id="informesBtn"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Centro de Control
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-start shadow menu-white"
+                                aria-labelledby="informesBtn">
+                                <li><a class="dropdown-item text-dark"
+                                        href="/Front/module/valoraciones.html">Valoraciones</a></li>
+                                <li><a class="dropdown-item text-dark"
+                                        href="/Front/module/Habilidades.html">Habilidades</a></li>
+                                <li><a class="dropdown-item text-dark"
+                                        href="/Front/module/estadisticas.html">Estadisticas</a></li>
+                                <li><a class="dropdown-item text-dark"
+                                        href="/Front/module/archivo_multimedia.html">Multimedia</a></li>
                             </ul>
                         </div>
 
                     </div>
                 </div>
+
+                <!-- Iconos -->
                 <div class="d-flex align-items-center gap-3">
                     <a href="/Front/module/Notificaciones.html" class="text-white fs-5" title="Notificaciones">
                         <i class="fa-solid fa-bell"></i>
@@ -67,7 +88,11 @@
                     <a href="/Front/module/configuracion.html" class="text-white fs-5" title="Configuración">
                         <i class="fa-solid fa-gear"></i>
                     </a>
+                    <a href="/Front/module/favoritos.html" class="text-white fs-5" title="Favoritos">
+                        <i class="fa-solid fa-heart"></i>
+                    </a>
                 </div>
+
 
             </div>
         </nav>
