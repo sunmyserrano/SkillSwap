@@ -23,6 +23,11 @@ const MultimediaRoutes = require('./routes/MultimediaRoutes');
 const Socios_AliadosRoutes = require('./routes/Socios_AliadosRoutes');
 const Solicitud_IntercambioRoutes = require('./routes/Solicitud_IntercambioRoutes');
 
+const NotificacionesRoutes = require('./routes/NotificacionesRoutes');
+const ReportesRoutes = require('./routes/ReportesRoutes');
+
+
+
 // Middlewares
 app.use(cors());
 app.use(express.json()); //
@@ -49,6 +54,8 @@ app.use('/api/Notificaciones', NotificacionesRoutes);
 app.use('/api/estadisticas', EstadisticasRoutes);
 app.use('/api/configuracion', ConfiguracionRoutes);
 app.use('/api/multimedia', MultimediaRoutes);
+app.use('/api/notificaciones', NotificacionesRoutes);
+app.use('/api/reportes', ReportesRoutes);
 
 // Carpeta Frontend
 app.use(express.static('Front'));
